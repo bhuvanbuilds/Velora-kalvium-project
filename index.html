@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Velora Search</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand-wrap">
+        <h1>Velora</h1>
+      </div>
+
+      <p class="tagline">Search the mood behind every image.</p>
+
+      <form id="search-form" class="search-form">
+        <label for="search-input" class="sr-only">Search topic</label>
+        <input
+          id="search-input"
+          type="search"
+          placeholder="Try: forests, cities, sunsets..."
+          aria-label="Search topic"
+        />
+        <button id="search-button" type="submit">Search</button>
+        <button id="clear-button" type="button" class="secondary-button">Clear</button>
+      </form>
+
+      <div class="chip-row" aria-label="Quick pick searches">
+        <button type="button" class="chip">Nature</button>
+        <button type="button" class="chip">Cities</button>
+        <button type="button" class="chip">Animals</button>
+      </div>
+    </header>
+
+    <main class="page">
+      <p id="status" class="status">Showing 0 results</p>
+      <section id="results" class="results-grid" aria-live="polite">
+        <p id="empty-state" class="empty-state">Search to see results</p>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
