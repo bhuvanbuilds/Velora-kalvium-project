@@ -150,6 +150,31 @@ h1 {
   align-items: start;
 }
 
+.card {
+  overflow: hidden;
+  border: 1px solid rgba(31, 122, 109, 0.12);
+  border-radius: 18px;
+  background: var(--panel);
+  box-shadow: 0 8px 22px var(--shadow);
+}
+
+.card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--panel-strong);
+}
+
+.card-caption {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  color: var(--ink);
+  font-size: 0.92rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
 .empty-state {
   grid-column: 1 / -1;
   margin: 0;
