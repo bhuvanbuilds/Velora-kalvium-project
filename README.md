@@ -1,9 +1,15 @@
 # Velora Search
 
-Velora Search is a visual discovery app that helps users explore image ideas by keyword. It is designed as a clean front-end interface where a person can type a topic, browse quick-pick suggestions, and later view a responsive gallery of results.
+Velora Search is a responsive image-search app that uses the Wikimedia Commons API to help users explore images by keyword. Search for a topic or choose one of the quick-pick suggestions to browse a gallery of results.
 
-I chose a warm, editorial color palette so the app feels friendly and distinctive instead of copying the reference purple theme. I also added a sticky header and quick-pick chips to make the page feel polished and easy to use on both desktop and mobile.
+The app includes a loading indicator and skeleton cards while searching, clear empty and error messages, and animated result cards. Its warm, editorial color palette, sticky header, and quick-pick chips keep the experience distinctive and easy to use on desktop and mobile.
 
-This project is the first part of a larger image-search app and intentionally keeps the results area empty until the search behavior is added in the next step.
+## Run locally
+
+Open `index.html` in a browser. Searches require an internet connection to reach Wikimedia Commons.
+
+## Deploy
+
+This is a static site and can be published with GitHub Pages, Netlify, or Vercel. For GitHub Pages, choose the repository's main branch and root folder in the repository's Pages settings.
 
 This is a Kalvium project.
