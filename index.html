@@ -34,8 +34,10 @@
     </header>
 
     <main class="page">
-      <p id="status" class="status">Showing 0 results</p>
-      <section id="results" class="results-grid" aria-live="polite">
+      <p id="status" class="status" role="status" aria-live="polite" aria-atomic="true">
+        Search to see results
+      </p>
+      <section id="results" class="results-grid" aria-live="polite" aria-busy="false">
         <p id="empty-state" class="empty-state">Search to see results</p>
       </section>
     </main>

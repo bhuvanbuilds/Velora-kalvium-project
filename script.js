@@ -4,9 +4,33 @@ const results = document.getElementById("results");
 const status = document.getElementById("status");
 const clearButton = document.getElementById("clear-button");
 const quickSearchButtons = document.querySelectorAll(".chip");
+let latestSearchId = 0;
+
+function showEmptyState(message) {
+  results.innerHTML = "";
+
+  const emptyState = document.createElement("p");
+  emptyState.className = "empty-state";
+  emptyState.textContent = message;
+  results.appendChild(emptyState);
+}
+
+function showLoadingState() {
+  status.innerHTML = '<span class="spinner" aria-hidden="true"></span> Searching…';
+  results.innerHTML = "";
+  results.setAttribute("aria-busy", "true");
+
+  for (let index = 0; index < 6; index += 1) {
+    const skeleton = document.createElement("div");
+    skeleton.className = "skeleton-card";
+    skeleton.setAttribute("aria-hidden", "true");
+    results.appendChild(skeleton);
+  }
+}
 
 function render(items) {
   results.innerHTML = "";
+  results.setAttribute("aria-busy", "false");
   let renderedCount = 0;
 
   items.forEach((item) => {
@@ -43,10 +67,7 @@ function render(items) {
   });
 
   if (renderedCount === 0) {
-    const emptyState = document.createElement("p");
-    emptyState.className = "empty-state";
-    emptyState.textContent = "No images found.";
-    results.appendChild(emptyState);
+    showEmptyState("No images found.");
   }
 
   return renderedCount;
@@ -59,6 +80,9 @@ searchForm.addEventListener("submit", async (event) => {
   if (!query) {
     return;
   }
+
+  const searchId = ++latestSearchId;
+  showLoadingState();
 
   const url =
     "https://commons.wikimedia.org/w/api.php?action=query&generator=search" +
@@ -73,29 +97,39 @@ searchForm.addEventListener("submit", async (event) => {
     }
 
     const data = await response.json();
+    if (searchId !== latestSearchId) {
+      return;
+    }
+
     const pages = data.query && data.query.pages;
     const items = pages && typeof pages === "object" ? Object.values(pages) : [];
     const renderedCount = render(items);
-    status.textContent = `Showing ${renderedCount} results for ${query}`;
+    status.textContent =
+      renderedCount > 0
+        ? `Showing ${renderedCount} results for ${query}`
+        : `No images found for ${query}. Try another search.`;
 
     if (renderedCount === 0) {
       results.querySelector(".empty-state").textContent = `No images found for ${query}.`;
     }
   } catch (error) {
+    if (searchId !== latestSearchId) {
+      return;
+    }
+
     console.error(error);
+    results.setAttribute("aria-busy", "false");
+    showEmptyState("Something went wrong. Please try again.");
     status.textContent = "Search failed. Please try again.";
   }
 });
 
 clearButton.addEventListener("click", () => {
+  latestSearchId += 1;
   searchInput.value = "";
-  results.innerHTML = "";
-
-  const emptyState = document.createElement("p");
-  emptyState.className = "empty-state";
-  emptyState.textContent = "Search to see results";
-  results.appendChild(emptyState);
-  status.textContent = "Showing 0 results";
+  results.setAttribute("aria-busy", "false");
+  showEmptyState("Search to see results");
+  status.textContent = "Search to see results";
   searchInput.focus();
 });
 
